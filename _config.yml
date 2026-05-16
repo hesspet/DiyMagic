@@ -1,0 +1,35 @@
+title: "DiyMagic"
+description: "Anleitungen, Berichte und Projektnotizen"
+url: ""
+baseurl: ""
+
+lang: "de-DE"
+timezone: "Europe/Berlin"
+
+markdown: kramdown
+
+collections:
+  artikel:
+    output: true
+    permalink: /artikel/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: "artikel"
+    values:
+      layout: "artikel"
+  - scope:
+      path: ""
+    values:
+      layout: "page"
+
+exclude:
+  - tools/
+  - README.md
+  - PROJEKTUEBERSICHT.md
+  - Projektuebersicht.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/

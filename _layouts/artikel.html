@@ -1,0 +1,68 @@
+---
+layout: default
+---
+<article class="article-shell">
+  <header class="article-header">
+    <p class="article-kicker">{{ page.type | default: "Artikel" }}</p>
+    <h1>{{ page.title }}</h1>
+    <div class="article-meta">
+      <time datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%d.%m.%Y" }}</time>
+      {% if page.updated %}
+        <span>Aktualisiert am <time datetime="{{ page.updated | date: "%Y-%m-%d" }}">{{ page.updated | date: "%d.%m.%Y" }}</time></span>
+      {% endif %}
+      {% if page.difficulty %}
+        <span>Schwierigkeit: {{ page.difficulty }}</span>
+      {% endif %}
+    </div>
+    {% if page.summary %}
+      <p class="article-summary">{{ page.summary }}</p>
+    {% endif %}
+    {% include tag-list.html topics=page.topics %}
+    {% if page.hero %}
+      <img class="article-hero" src="{{ page.hero | relative_url }}" alt="">
+    {% endif %}
+  </header>
+
+  {% if page.material or page.tools or page.platforms %}
+    <aside class="article-facts" aria-label="Artikeldaten">
+      {% if page.material %}
+        <section>
+          <h2>Material</h2>
+          <ul>{% for item in page.material %}<li>{{ item }}</li>{% endfor %}</ul>
+        </section>
+      {% endif %}
+      {% if page.tools %}
+        <section>
+          <h2>Werkzeuge</h2>
+          <ul>{% for item in page.tools %}<li>{{ item }}</li>{% endfor %}</ul>
+        </section>
+      {% endif %}
+      {% if page.platforms %}
+        <section>
+          <h2>Plattformen</h2>
+          <ul>{% for item in page.platforms %}<li>{{ item }}</li>{% endfor %}</ul>
+        </section>
+      {% endif %}
+    </aside>
+  {% endif %}
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  {% if page.related %}
+    <footer class="related-articles">
+      <h2>Verwandte Artikel</h2>
+      <ul>
+        {% for related_url in page.related %}
+          {% assign related_item = site.artikel | where: "url", related_url | first %}
+          {% if related_item %}
+            <li><a href="{{ related_item.url | relative_url }}">{{ related_item.title }}</a></li>
+          {% else %}
+            <li><a href="{{ related_url | relative_url }}">{{ related_url }}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </footer>
+  {% endif %}
+</article>

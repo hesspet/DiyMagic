@@ -1,0 +1,18 @@
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+Gemfile.lock
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Editoren
+.vscode/
+.idea/
+
+# Lokale Eingangsbilder
+_incoming-images/

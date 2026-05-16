@@ -1,0 +1,7 @@
+{% if include.topics and include.topics.size > 0 %}
+  <ul class="tag-list" aria-label="Themen">
+    {% for topic in include.topics %}
+      <li>{{ topic }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}

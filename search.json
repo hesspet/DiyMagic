@@ -1,0 +1,19 @@
+---
+layout: null
+---
+[
+{% assign artikel_sortiert = site.artikel | where_exp: "item", "item.status != 'entwurf'" | sort: "date" | reverse %}
+{% for item in artikel_sortiert %}
+  {
+    "title": {{ item.title | jsonify }},
+    "url": {{ item.url | relative_url | jsonify }},
+    "date": {{ item.date | date: "%Y-%m-%d" | jsonify }},
+    "displayDate": {{ item.date | date: "%d.%m.%Y" | jsonify }},
+    "year": {{ item.date | date: "%Y" | jsonify }},
+    "type": {{ item.type | default: "Artikel" | jsonify }},
+    "summary": {{ item.summary | default: "" | jsonify }},
+    "topics": {{ item.topics | jsonify }},
+    "content": {{ item.content | strip_html | normalize_whitespace | jsonify }}
+  }{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]
