@@ -1,0 +1,6 @@
+---
+layout: null
+---
+{
+  "version": {{ site.github.build_revision | default: site.time | jsonify }}
+}

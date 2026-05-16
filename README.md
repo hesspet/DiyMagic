@@ -87,6 +87,8 @@ Empfohlen ist `.webp` mit maximal etwa 1600 px Breite für Artikelbilder. Mit Im
 
 Die Veröffentlichung erfolgt über GitHub Actions. In den Repository-Einstellungen unter `Settings -> Pages` als Quelle `GitHub Actions` auswählen.
 
+Die Website erzeugt zusätzlich `site-version.json`. Das Skript `assets/js/site-version.js` prüft beim Öffnen und beim Zurückkehren in den Tab, ob ein neuer Deploy vorhanden ist, und lädt die Seite dann einmal neu.
+
 Wenn das Repository als Projektseite unter `https://<user>.github.io/DiyMagic/` läuft, in `_config.yml` setzen:
 
 ```yaml

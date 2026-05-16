@@ -114,6 +114,7 @@ Für die erste Version:
 - Kein Angular.
 - Kein Node-Build-Prozess.
 - Nur Plain JavaScript.
+- `assets/js/site-version.js` prüft eine generierte `site-version.json` und lädt die Seite nach einem neuen Deploy einmal neu, damit Browser-Caches nicht dauerhaft alte Übersichtsseiten anzeigen.
 
 ### CSS
 
