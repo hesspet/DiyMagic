@@ -1,42 +1,64 @@
 ---
 layout: default
 ---
-{% assign aktuelle_artikel = site.artikel | where_exp: "item", "item.status != 'entwurf'" | sort: "date" | reverse %}
-<section class="home-hero">
-  <div class="wide-shell">
-    <h1>{{ site.title }}</h1>
-    <p>Anleitungen, Berichte und Projektnotizen zu Zauberei, Requisitenbau, Holzarbeiten, Garten, Software und Elektronik.</p>
-    <div class="action-row" aria-label="Schnelleinstieg">
-      <a class="button" href="{{ '/suche/' | relative_url }}">Suche öffnen</a>
-      <a class="button button--secondary" href="{{ '/archiv/' | relative_url }}">Archiv anzeigen</a>
-    </div>
-  </div>
-</section>
+{% assign veroeffentlichte_artikel = site.artikel | where_exp: "item", "item.status != 'entwurf'" %}
+{% assign aktualisierte_artikel = veroeffentlichte_artikel | where_exp: "item", "item.updated" | sort: "updated" | reverse %}
+{% assign datierte_artikel = veroeffentlichte_artikel | where_exp: "item", "item.updated == nil or item.updated == ''" | sort: "date" | reverse %}
 
-<section class="wide-shell content-section">
-  <div class="section-heading">
-    <h2>Neueste Artikel</h2>
-    <a href="{{ '/archiv/' | relative_url }}">Alle anzeigen</a>
+<div class="page-shell home-page">
+  <header class="page-header">
+    <h1>{{ site.title }}</h1>
+  </header>
+
+  <div class="prose home-introduction">
+    {{ content }}
   </div>
-  {% if aktuelle_artikel.size > 0 %}
-    <div class="article-grid">
-      {% for artikel in aktuelle_artikel limit: 6 %}
-        {% include article-card.html article=artikel %}
-      {% endfor %}
+
+  <section class="latest-updates" aria-labelledby="latest-updates-title">
+    <div class="section-heading">
+      <h2 id="latest-updates-title">Zuletzt aktualisierte Artikel</h2>
+      <a href="{{ '/archiv/' | relative_url }}">Archiv anzeigen</a>
     </div>
+
+  {% if veroeffentlichte_artikel.size > 0 %}
+    {% assign artikel_zaehler = 0 %}
+    <ol class="update-list">
+      {% for artikel in aktualisierte_artikel limit: 25 %}
+        {% assign artikel_zaehler = artikel_zaehler | plus: 1 %}
+        <li>
+          <article>
+            <h3><a href="{{ artikel.url | relative_url }}">{{ artikel.title }}</a></h3>
+            <p>{{ artikel.summary }}</p>
+            <div class="article-card__meta">
+              <span>{{ artikel.type | default: "Artikel" }}</span>
+              {% if artikel.updated %}
+                <span>Aktualisiert am <time datetime="{{ artikel.updated | date: "%Y-%m-%d" }}">{{ artikel.updated | date: "%d.%m.%Y" }}</time></span>
+              {% else %}
+                <time datetime="{{ artikel.date | date: "%Y-%m-%d" }}">{{ artikel.date | date: "%d.%m.%Y" }}</time>
+              {% endif %}
+            </div>
+          </article>
+        </li>
+      {% endfor %}
+
+      {% assign restplaetze = 25 | minus: artikel_zaehler %}
+      {% if restplaetze > 0 %}
+        {% for artikel in datierte_artikel limit: restplaetze %}
+          <li>
+            <article>
+              <h3><a href="{{ artikel.url | relative_url }}">{{ artikel.title }}</a></h3>
+              <p>{{ artikel.summary }}</p>
+              <div class="article-card__meta">
+                <span>{{ artikel.type | default: "Artikel" }}</span>
+                <time datetime="{{ artikel.date | date: "%Y-%m-%d" }}">{{ artikel.date | date: "%d.%m.%Y" }}</time>
+              </div>
+            </article>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ol>
   {% else %}
     <p class="empty-state">Noch keine veröffentlichten Artikel vorhanden.</p>
   {% endif %}
-</section>
-
-<section class="wide-shell content-section">
-  <div class="section-heading">
-    <h2>Themen</h2>
-    <a href="{{ '/themen/' | relative_url }}">Themenübersicht</a>
-  </div>
-  <ul class="topic-overview">
-    {% for topic in site.data.topics limit: 10 %}
-      <li><a href="{{ '/themen/' | relative_url }}#{{ topic | slugify }}">{{ topic }}</a></li>
-    {% endfor %}
-  </ul>
-</section>
+  </section>
+</div>
