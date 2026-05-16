@@ -54,6 +54,8 @@ Erlaubte Statuswerte:
 
 Entwürfe bleiben im Repository, erscheinen aber nicht auf Startseite, Archiv, Themenseite oder Suche.
 
+Jekyll ist so konfiguriert, dass auch Artikel mit einem Datum in der Zukunft gebaut werden. Die Veröffentlichung wird in diesem Projekt nicht über das Datum gesteuert, sondern über `status`.
+
 ## Bilder
 
 Artikelbilder liegen unter:

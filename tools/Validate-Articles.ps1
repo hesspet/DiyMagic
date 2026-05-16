@@ -8,6 +8,7 @@ $topicsPath = Join-Path $dataDirectory "topics.yml"
 $allowedStatuses = @("entwurf", "fertig", "überarbeitet", "archiviert")
 $requiredFields = @("title", "date", "type", "topics", "summary", "status")
 $errors = New-Object System.Collections.Generic.List[string]
+$visibleArticles = New-Object System.Collections.Generic.List[string]
 
 function Read-ListFile {
   param([string]$Path)
@@ -162,6 +163,10 @@ if (-not (Test-Path -LiteralPath $articleDirectory)) {
       Add-Error "${relativeName}: Ungültiger Status: $($metadata["status"])"
     }
 
+    if ($metadata.ContainsKey("status") -and $metadata["status"] -ne "entwurf" -and $metadata.ContainsKey("title")) {
+      $visibleArticles.Add("$($metadata["title"]) ($relativeName)") | Out-Null
+    }
+
     if ($metadata.ContainsKey("permalink") -and -not [string]::IsNullOrWhiteSpace([string]$metadata["permalink"])) {
       $permalink = [string]$metadata["permalink"]
       if ($permalink -notmatch "^/artikel/.+\.html$") {
@@ -198,3 +203,9 @@ if ($errors.Count -gt 0) {
 }
 
 Write-Host "Validierung erfolgreich."
+if ($visibleArticles.Count -gt 0) {
+  Write-Host "Sichtbare Artikel:"
+  foreach ($visibleArticle in $visibleArticles) {
+    Write-Host " - $visibleArticle"
+  }
+}

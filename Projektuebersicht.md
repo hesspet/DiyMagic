@@ -240,6 +240,7 @@ lang: "de-DE"
 timezone: "Europe/Berlin"
 
 markdown: kramdown
+future: true
 
 collections:
   artikel:
