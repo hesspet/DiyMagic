@@ -9,7 +9,7 @@ topics:
   - GitHub Pages
 summary: "Ein Beispielartikel, der Struktur, Metadaten und Bildverwendung demonstriert."
 hero:
-status: "entwurf"
+status: "fertig"
 difficulty: "einfach"
 permalink: /artikel/beispiel-erste-anleitung/
 ---
