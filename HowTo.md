@@ -92,8 +92,10 @@ assets/images/articles/<artikel-slug>/
 Im Artikel referenzierst du sie so:
 
 ```markdown
-![Beschreibung des Bildes]({{ '/assets/images/articles/artikel-slug/bild.webp' | relative_url }})
+![Beschreibung des Bildes](./../assets/images/articles/artikel-slug/bild.webp)
 ```
+
+Diese Schreibweise ist für Typora gedacht. Sie funktioniert auch auf GitHub Pages, weil Artikel unter `/artikel/<slug>.html` veröffentlicht werden.
 
 ## 6. Artikel schreiben
 

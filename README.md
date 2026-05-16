@@ -62,6 +62,14 @@ Artikelbilder liegen unter:
 assets/images/articles/<artikel-slug>/
 ```
 
+In Artikeln werden Bildlinks Typora-kompatibel relativ aus `_artikel` heraus geschrieben:
+
+```markdown
+![Kurzer Alternativtext](./../assets/images/articles/<artikel-slug>/bild.jpg)
+```
+
+Damit diese Links auch auf GitHub Pages funktionieren, werden Artikel als HTML-Dateien unter `/artikel/<slug>.html` veröffentlicht. Von dort zeigt `./../assets/...` korrekt auf den zentralen Bilderordner, auch wenn `baseurl: "/DiyMagic"` gesetzt ist.
+
 Empfohlen ist `.webp` mit maximal etwa 1600 px Breite für Artikelbilder. Mit ImageMagick können Bilder vorbereitet werden:
 
 ```powershell

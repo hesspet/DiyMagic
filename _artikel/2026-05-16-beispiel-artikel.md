@@ -11,7 +11,7 @@ summary: "Ein Beispielartikel, der Struktur, Metadaten und Bildverwendung demons
 hero:
 status: "fertig"
 difficulty: "einfach"
-permalink: /artikel/beispiel-erste-anleitung/
+permalink: /artikel/beispiel-erste-anleitung.html
 ---
 
 ## Worum geht es?

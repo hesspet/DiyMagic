@@ -87,6 +87,31 @@ function Test-ExistingSitePath {
   return Test-Path -LiteralPath $candidatePath
 }
 
+function Test-ExistingMarkdownImagePath {
+  param(
+    [string]$Value,
+    [string]$ArticleDirectory
+  )
+
+  if ([string]::IsNullOrWhiteSpace($Value)) {
+    return $true
+  }
+
+  $normalizedValue = $Value.Trim('"')
+
+  if ($normalizedValue -match "^/assets/") {
+    return Test-ExistingSitePath -Value $normalizedValue
+  }
+
+  if ($normalizedValue -match "^\./\.\./assets/") {
+    $relativePath = $normalizedValue -replace "/", [System.IO.Path]::DirectorySeparatorChar
+    $candidatePath = Join-Path $ArticleDirectory $relativePath
+    return Test-Path -LiteralPath $candidatePath
+  }
+
+  return $true
+}
+
 $allowedTypes = Read-ListFile -Path $articleTypesPath
 $allowedTopics = Read-ListFile -Path $topicsPath
 
@@ -139,8 +164,8 @@ if (-not (Test-Path -LiteralPath $articleDirectory)) {
 
     if ($metadata.ContainsKey("permalink") -and -not [string]::IsNullOrWhiteSpace([string]$metadata["permalink"])) {
       $permalink = [string]$metadata["permalink"]
-      if ($permalink -notmatch "^/artikel/.+/$") {
-        Add-Error "${relativeName}: permalink muss mit /artikel/ beginnen und mit / enden."
+      if ($permalink -notmatch "^/artikel/.+\.html$") {
+        Add-Error "${relativeName}: permalink muss mit /artikel/ beginnen und mit .html enden."
       }
     }
 
@@ -154,10 +179,10 @@ if (-not (Test-Path -LiteralPath $articleDirectory)) {
       Add-Error "${relativeName}: Dateiname muss mit Datum beginnen und einen Slug aus Kleinbuchstaben, Zahlen und Bindestrichen haben."
     }
 
-    $markdownImageMatches = [regex]::Matches(($lines -join [Environment]::NewLine), "!\[[^\]]*\]\((/assets/[^)\s]+)\)")
+    $markdownImageMatches = [regex]::Matches(($lines -join [Environment]::NewLine), "!\[[^\]]*\]\(((?:/assets/|\./\.\./assets/)[^)\s]+)\)")
     foreach ($match in $markdownImageMatches) {
       $imagePath = $match.Groups[1].Value
-      if (-not (Test-ExistingSitePath -Value $imagePath)) {
+      if (-not (Test-ExistingMarkdownImagePath -Value $imagePath -ArticleDirectory $file.DirectoryName)) {
         Add-Error "${relativeName}: Bildreferenz existiert nicht: $imagePath"
       }
     }

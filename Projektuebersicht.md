@@ -189,7 +189,7 @@ Die Artikel sollen unter einer stabilen URL erreichbar sein.
 Beispiel:
 
 ```text
-/artikel/gartenhaus-fundament-ausrichten/
+/artikel/gartenhaus-fundament-ausrichten.html
 ```
 
 Nicht erwünscht sind automatisch generierte URLs, die später schwer zu ändern sind.
@@ -199,14 +199,24 @@ Jeder Artikel kann im YAML-Header optional ein eigenes `permalink` erhalten. Wen
 Empfohlene Regel:
 
 ```yaml
-permalink: /artikel/<sprechender-slug>/
+permalink: /artikel/<sprechender-slug>.html
 ```
 
 Beispiel:
 
 ```yaml
-permalink: /artikel/gartenhaus-fundament-ausrichten/
+permalink: /artikel/gartenhaus-fundament-ausrichten.html
 ```
+
+Begründung:
+
+Artikelbilder werden in Markdown Typora-kompatibel relativ aus `_artikel` heraus verlinkt, zum Beispiel:
+
+```markdown
+![Ausgerichtete Gehwegplatten](./../assets/images/articles/gartenhaus-fundament/schritt-01.webp)
+```
+
+Damit derselbe Link lokal in Typora und auf GitHub Pages funktioniert, werden Artikelseiten unter `/artikel/<slug>.html` statt unter `/artikel/<slug>/` veröffentlicht. Von `/artikel/<slug>.html` aus zeigt `./../assets/...` korrekt auf `/assets/...`, auch bei einer Projektseite mit `baseurl: "/DiyMagic"`.
 
 ---
 
@@ -234,7 +244,7 @@ markdown: kramdown
 collections:
   artikel:
     output: true
-    permalink: /artikel/:name/
+    permalink: /artikel/:name.html
 
 defaults:
   - scope:
@@ -308,7 +318,7 @@ summary: "Eine Schritt-für-Schritt-Anleitung zum Ausrichten eines kleinen Garte
 hero: "/assets/images/articles/gartenhaus-fundament/hero.webp"
 status: "fertig"
 difficulty: "mittel"
-permalink: /artikel/gartenhaus-fundament-ausrichten/
+permalink: /artikel/gartenhaus-fundament-ausrichten.html
 ---
 ```
 
@@ -634,7 +644,7 @@ Zielstruktur:
 [
   {
     "title": "Gartenhaus: Fundament ausrichten",
-    "url": "/artikel/gartenhaus-fundament-ausrichten/",
+    "url": "/artikel/gartenhaus-fundament-ausrichten.html",
     "date": "2026-05-16",
     "year": "2026",
     "type": "Anleitung",
@@ -740,16 +750,10 @@ assets/images/articles/gartenhaus-fundament/
 Im Markdown:
 
 ```markdown
-![Ausgerichtete Gehwegplatten](/assets/images/articles/gartenhaus-fundament/schritt-01.webp)
+![Ausgerichtete Gehwegplatten](./../assets/images/articles/gartenhaus-fundament/schritt-01.webp)
 ```
 
-Besser mit `relative_url` in HTML/Liquid-Templates. In reinem Markdown ist das schwieriger. Daher sollen Bildpfade in Artikeln als absolute Site-Pfade mit `/assets/...` notiert werden. Bei Projektseiten mit `baseurl` kann das problematisch sein. Falls `DiyMagic` als Projektseite läuft, soll Codex eine Lösung anbieten, z. B. über Liquid:
-
-```liquid
-![Ausgerichtete Gehwegplatten]({{ '/assets/images/articles/gartenhaus-fundament/schritt-01.webp' | relative_url }})
-```
-
-Jekyll verarbeitet Liquid in Markdown-Dateien.
+Diese relative Schreibweise ist bewusst gewählt, damit Typora die Bilder direkt aus dem Repository anzeigen kann. Artikel-Permalinks müssen deshalb auf `/artikel/<slug>.html` enden. Absolute Markdown-Bildpfade wie `/assets/...` sollen in neuen Artikeln nicht mehr verwendet werden.
 
 ---
 
@@ -829,7 +833,7 @@ summary: "<Zusammenfassung>"
 hero:
 status: "entwurf"
 difficulty:
-permalink: /artikel/<slug>/
+permalink: /artikel/<slug>.html
 ---
 ```
 
@@ -857,7 +861,7 @@ Prüfungen:
 - Alle `topics` sind in `_data/topics.yml` enthalten.
 - `status` ist einer der erlaubten Werte.
 - `summary` ist nicht leer.
-- `permalink`, falls vorhanden, beginnt mit `/artikel/` und endet mit `/`.
+- `permalink`, falls vorhanden, beginnt mit `/artikel/` und endet mit `.html`.
 - `hero`, falls gesetzt, zeigt auf eine existierende Datei.
 - Bildreferenzen im Markdown zeigen auf existierende Dateien, soweit einfach erkennbar.
 - Dateiname beginnt mit Datum.
@@ -1093,7 +1097,7 @@ summary: "Ein Beispielartikel, der Struktur, Metadaten und Bildverwendung demons
 hero:
 status: "entwurf"
 difficulty: "einfach"
-permalink: /artikel/beispiel-erste-anleitung/
+permalink: /artikel/beispiel-erste-anleitung.html
 ---
 
 ## Worum geht es?
@@ -1364,8 +1368,8 @@ Später kann daraus eine Serienübersicht entstehen.
 
 ```yaml
 related:
-  - /artikel/gartenhaus-fundament-ausrichten/
-  - /artikel/gartenhaus-dach-eindecken/
+  - /artikel/gartenhaus-fundament-ausrichten.html
+  - /artikel/gartenhaus-dach-eindecken.html
 ```
 
 ### Schwierigkeitsgrad

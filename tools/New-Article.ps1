@@ -73,7 +73,7 @@ summary: "$escapedSummary"
 hero:
 status: "entwurf"
 difficulty:
-permalink: /artikel/$slug/
+permalink: /artikel/$slug.html
 ---
 
 ## Worum geht es?
