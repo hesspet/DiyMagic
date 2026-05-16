@@ -27,6 +27,13 @@ function Add-Error {
   $errors.Add($Message) | Out-Null
 }
 
+function Test-FileStartsWithUtf8Bom {
+  param([string]$Path)
+
+  $bytes = [System.IO.File]::ReadAllBytes($Path)
+  return $bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF
+}
+
 function Get-FrontMatter {
   param([string[]]$Lines)
 
@@ -123,6 +130,11 @@ if (-not (Test-Path -LiteralPath $articleDirectory)) {
 
   foreach ($file in $articleFiles) {
     $relativeName = $file.Name
+    if (Test-FileStartsWithUtf8Bom -Path $file.FullName) {
+      Add-Error "${relativeName}: Datei beginnt mit UTF-8-BOM. Jekyll erkennt dann den YAML-Header nicht zuverlässig. Bitte als UTF-8 ohne BOM speichern."
+      continue
+    }
+
     $lines = Get-Content -LiteralPath $file.FullName -Encoding UTF8
     $frontMatter = Get-FrontMatter -Lines $lines
 

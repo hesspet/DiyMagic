@@ -80,7 +80,8 @@ permalink: /artikel/$slug.html
 
 "@
 
-Set-Content -LiteralPath $articlePath -Value $content -Encoding UTF8 -NoNewline
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+[System.IO.File]::WriteAllText($articlePath, $content, $utf8NoBom)
 
 Write-Host "Artikel erzeugt: $articlePath"
 Write-Host "Bildordner erzeugt: $imageDirectory"

@@ -56,6 +56,8 @@ Entwürfe bleiben im Repository, erscheinen aber nicht auf Startseite, Archiv, T
 
 Jekyll ist so konfiguriert, dass auch Artikel mit einem Datum in der Zukunft gebaut werden. Die Veröffentlichung wird in diesem Projekt nicht über das Datum gesteuert, sondern über `status`.
 
+Artikeldateien müssen als UTF-8 ohne BOM gespeichert werden. Ein UTF-8-BOM vor dem ersten `---` verhindert, dass Jekyll den YAML-Header zuverlässig als Front Matter erkennt.
+
 ## Bilder
 
 Artikelbilder liegen unter:

@@ -45,6 +45,7 @@ Codex lokal
 
 - Markdown-Dateien sind die Quelle.
 - YAML-Front-Matter enthält Metadaten.
+- Artikeldateien müssen als UTF-8 ohne BOM gespeichert werden, damit Jekyll den YAML-Header zuverlässig erkennt.
 - Bilder liegen im Repository.
 - Artikel werden als statische HTML-Seiten generiert.
 - Übersichtsseiten werden automatisch erzeugt.
@@ -849,6 +850,7 @@ Zweck:
 Prüfungen:
 
 - Jede Datei in `_artikel/*.md` hat YAML-Front-Matter.
+- Keine Artikeldatei beginnt mit einem UTF-8-BOM.
 - Pflichtfelder vorhanden:
   - title
   - date
