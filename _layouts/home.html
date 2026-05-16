@@ -1,9 +1,8 @@
 ---
 layout: default
 ---
-{% assign veroeffentlichte_artikel = site.artikel | where_exp: "item", "item.status != 'entwurf'" %}
-{% assign aktualisierte_artikel = veroeffentlichte_artikel | where_exp: "item", "item.updated" | sort: "updated" | reverse %}
-{% assign datierte_artikel = veroeffentlichte_artikel | where_exp: "item", "item.updated == nil or item.updated == ''" | sort: "date" | reverse %}
+{% assign artikel_nach_aktualisierung = site.artikel | sort: "updated" | reverse %}
+{% assign artikel_nach_datum = site.artikel | sort: "date" | reverse %}
 
 <div class="page-shell home-page">
   <header class="page-header">
@@ -20,44 +19,53 @@ layout: default
       <a href="{{ '/archiv/' | relative_url }}">Archiv anzeigen</a>
     </div>
 
-  {% if veroeffentlichte_artikel.size > 0 %}
     {% assign artikel_zaehler = 0 %}
     <ol class="update-list">
-      {% for artikel in aktualisierte_artikel limit: 25 %}
-        {% assign artikel_zaehler = artikel_zaehler | plus: 1 %}
-        <li>
-          <article>
-            <h3><a href="{{ artikel.url | relative_url }}">{{ artikel.title }}</a></h3>
-            <p>{{ artikel.summary }}</p>
-            <div class="article-card__meta">
-              <span>{{ artikel.type | default: "Artikel" }}</span>
-              {% if artikel.updated %}
-                <span>Aktualisiert am <time datetime="{{ artikel.updated | date: "%Y-%m-%d" }}">{{ artikel.updated | date: "%d.%m.%Y" }}</time></span>
-              {% else %}
-                <time datetime="{{ artikel.date | date: "%Y-%m-%d" }}">{{ artikel.date | date: "%d.%m.%Y" }}</time>
-              {% endif %}
-            </div>
-          </article>
-        </li>
+      {% for artikel in artikel_nach_aktualisierung %}
+        {% unless artikel.status == "entwurf" %}
+          {% if artikel.updated %}
+            {% if artikel_zaehler < 25 %}
+              {% assign artikel_zaehler = artikel_zaehler | plus: 1 %}
+              <li>
+                <article>
+                  <h3><a href="{{ artikel.url | relative_url }}">{{ artikel.title }}</a></h3>
+                  <p>{{ artikel.summary }}</p>
+                  <div class="article-card__meta">
+                    <span>{{ artikel.type | default: "Artikel" }}</span>
+                    <span>Aktualisiert am <time datetime="{{ artikel.updated | date: "%Y-%m-%d" }}">{{ artikel.updated | date: "%d.%m.%Y" }}</time></span>
+                  </div>
+                </article>
+              </li>
+            {% endif %}
+          {% endif %}
+        {% endunless %}
       {% endfor %}
 
       {% assign restplaetze = 25 | minus: artikel_zaehler %}
       {% if restplaetze > 0 %}
-        {% for artikel in datierte_artikel limit: restplaetze %}
-          <li>
-            <article>
-              <h3><a href="{{ artikel.url | relative_url }}">{{ artikel.title }}</a></h3>
-              <p>{{ artikel.summary }}</p>
-              <div class="article-card__meta">
-                <span>{{ artikel.type | default: "Artikel" }}</span>
-                <time datetime="{{ artikel.date | date: "%Y-%m-%d" }}">{{ artikel.date | date: "%d.%m.%Y" }}</time>
-              </div>
-            </article>
-          </li>
+        {% for artikel in artikel_nach_datum %}
+          {% unless artikel.status == "entwurf" %}
+            {% unless artikel.updated %}
+              {% if restplaetze > 0 %}
+                {% assign restplaetze = restplaetze | minus: 1 %}
+                {% assign artikel_zaehler = artikel_zaehler | plus: 1 %}
+                <li>
+                  <article>
+                    <h3><a href="{{ artikel.url | relative_url }}">{{ artikel.title }}</a></h3>
+                    <p>{{ artikel.summary }}</p>
+                    <div class="article-card__meta">
+                      <span>{{ artikel.type | default: "Artikel" }}</span>
+                      <time datetime="{{ artikel.date | date: "%Y-%m-%d" }}">{{ artikel.date | date: "%d.%m.%Y" }}</time>
+                    </div>
+                  </article>
+                </li>
+              {% endif %}
+            {% endunless %}
+          {% endunless %}
         {% endfor %}
       {% endif %}
     </ol>
-  {% else %}
+  {% if artikel_zaehler == 0 %}
     <p class="empty-state">Noch keine veröffentlichten Artikel vorhanden.</p>
   {% endif %}
   </section>
