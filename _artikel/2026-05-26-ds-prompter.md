@@ -10,6 +10,7 @@ topics:
   - Puppenspiel
   - Daumenspitze
   - BLE-Prompter
+  - ESP32
 summary: "Das Eckige muss ins Runde. Weitere Prompter Variante!"
 hero:
 status: "fertig"
@@ -44,13 +45,13 @@ Bisher ist es erst einmal eine Idee. Mal sehen was daraus wird.
 
 Einfach mal ein Versuch, jetzt mit Akku alles drin und ab auf den Daumen.
 
-<img src="./../assets/images/articles/ds-prompter/DS_000.jpg" style="zoom:33%;" /><img src="./../assets/images/articles/ds-prompter/DS_001.jpg" alt="DS_001" style="zoom:33%;" /><img src="./../assets/images/articles/ds-prompter/DS_003.jpg" alt="DS_003" style="zoom:33%;" /><img src="./../assets/images/articles/ds-prompter/DS_005.jpg" alt="DS_005" style="zoom:33%;" />
+<img src="./../assets/images/articles/ds-prompter/DS_000.jpg" style="zoom:33%;" /> <img src="./../assets/images/articles/ds-prompter/DS_001.jpg" alt="DS_001" style="zoom:33%;" /> <img src="./../assets/images/articles/ds-prompter/DS_003.jpg" alt="DS_003" style="zoom:33%;" /> <img src="./../assets/images/articles/ds-prompter/DS_005.jpg" alt="DS_005" style="zoom:33%;" />
 
 Da hat einer ein Loch in meinen Daumen gemacht....
 
-<img src="./../assets/images/articles/ds-prompter/DS_009.jpg" alt="DS_009" style="zoom:33%;" /><img src="./../assets/images/articles/ds-prompter/DS_011.jpg" alt="DS_011" style="zoom:33%;" />
+<img src="./../assets/images/articles/ds-prompter/DS_009.jpg" alt="DS_009" style="zoom:33%;" /> <img src="./../assets/images/articles/ds-prompter/DS_011.jpg" alt="DS_011" style="zoom:33%;" />
 
-Sollte so gehen, Ok, den Ausschnitt könnte man hübscher machen, aber Hauptsache es funktioniert. 
+Sollte so gehen, Ok, den Ausschnitt könnte man hübscher machen, aber Hauptsache es funktioniert. Falls jetzt jemand glaubt, dass Bild wäre ein Fake. Nein, das Display ist wirklich so klar.
 
-Ich sehe, ich muss nochmal ein Bild mit der invertierten Darstellung machen. Vielleicht fällt dann da das "Loch im Daumen" noch weniger auf.
+TBD: Ich sehe, ich muss nochmal ein Bild mit der invertierten Darstellung machen. Vielleicht fällt dann da das "Loch im Daumen" noch weniger auf.
 
