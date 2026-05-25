@@ -13,4 +13,3 @@ Am Eckelgarten 1
 
 hesspet at gmx dot de
 
-[https://hesspet.github.io/impressum](https://hesspet.github.io/impressum)
